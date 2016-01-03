@@ -1,17 +1,10 @@
 module.exports = (router) => {
     
-     var gen = require('../../shared/index')();
+    var util = require('../../shared/index')();
+    var randomContr = require('../../shared/controllers/randoms');
     
     router.get('/api/randoms/:n', (req, res) => {
-        var amount = req.params.n;
-        var start = gen.timer.start();
-        var nums = gen.randomGen(amount).sort((a, b) => a - b);
-        var time = gen.timer.stop(start);
-        
-        res.send({
-            time: time,
-            nums: nums
-        })
+        res.send(randomContr.createRandomArray(req.params.n));
     })
     
 }

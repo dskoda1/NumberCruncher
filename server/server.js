@@ -9,7 +9,7 @@ var bp = require('body-parser');
 router.use(bp.urlencoded({extended: false}));
 
 
-var gen = require('../shared/index')();
+//var util = require('../shared/index')();
 var routes = require('./routes/index')(router);
 
 
