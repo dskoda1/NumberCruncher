@@ -1,6 +1,5 @@
 exports = module.exports = {}
 var util = require('../index')();
-var ll = require('./linkedList');
 
 
 exports.createRandomArray = (n) => {
@@ -17,7 +16,6 @@ exports.createRandomArray = (n) => {
 exports.createRandomLinkedList = (n) => {
     
     //TODO: Do this shit
-    var list = {}
     
     for (var i=1;i<=n;i++) {
 		arr.push(Math.floor(Math.random()*10000));

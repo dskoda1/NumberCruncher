@@ -1,10 +1,5 @@
-exports = module.exports = {}
-
-
-exports.List = () => {
-
-    return function() {
-        this.head = null,
+function ll () {
+    this.head = null,
             this.tail = null,
             this.addNode = (val) => {
                 return {
@@ -12,7 +7,6 @@ exports.List = () => {
                     next: null
                 }
             }
-    };
-
-
 }
+
+module.exports = ll;

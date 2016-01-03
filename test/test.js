@@ -21,12 +21,10 @@ describe("/Shared", () => {
         
         var controllers = require('../shared/controllers/index')();
         
-        
         //random.js module
         describe("randoms.js", () =>{
             
             var randoms = controllers.randoms;
-            
             //Create random array controller
             describe("createRandomArray(n)", () =>{
                 it("Should return an object with keys time, nums", () =>{
@@ -40,27 +38,10 @@ describe("/Shared", () => {
             });
             describe("createRandomLinkedList(n)", () =>{
                 it("Should return a list object: Not implemented", () =>{
-                    
-                    
-                    
                 })
             })
         });
-        describe("linkedList.js", () =>{
-            
-            var ll = controllers.ll;
-            
-            
-            describe("List()", () => {
-                it("Should return an object with a head and tail ref: Not implemented", () =>{
-                    
-                    //expect(list).to.have.any.keys('head');
-                    //expect(list).to.have.any.keys("tail");
-                    
-                })
-            })
-            
-        })
+       
         
     })
 })
