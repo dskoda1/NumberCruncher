@@ -1,5 +1,6 @@
-var expect = require('chai').expect;
-
+var chai = require('chai');
+var expect = chai.expect;
+var assert = chai.assert;
 
 describe('/Shared/dataStructures', () => {
     describe("linkedList.js", () => {
@@ -13,40 +14,47 @@ describe('/Shared/dataStructures', () => {
                 expect(list).to.have.any.keys("tail");
 
             });
+            it('Should have a length:number key', () => {
+                var list = new ll();
+                expect(list).to.have.any.keys('length')
+                assert.isFalse(isNaN(list.length), "Length of list should be a number")
+            })
 
             describe("addNode(val)", () => {
                 it("Should return a node with keys data=val, next=null", () => {
-                        var list = new ll();
-                        var node = list.addNode(4);
+                    var list = new ll();
+                    var node = list.addNode(4);
 
-                        expect(node).to.have.any.keys('data');
-                        expect(node.data).to.equal(4);
-                        expect(node).to.have.any.keys("next");
-                        expect(node.next).to.be.a('null');
+                    expect(node).to.have.any.keys('data');
+                    expect(node.data).to.equal(4);
+                    expect(node).to.have.any.keys("next");
+                    expect(node.next).to.be.a('null');
+                })
+                it("Should increment list count by 1", () => {
+                        var list = new ll();
+                        expect(list.length).to.equal(0);
+                        list.addNode(8);
+                        expect(list.length).to.equal(1);
+                        list.addNode(15);
+                        expect(list.length).to.equal(2);
+                        list.addNode(10);
+                        expect(list.length).to.equal(3);
                     })
                     //Empty list
 
                 describe("Adding a node to empty list", () => {
                         it('Should set head and tail to the node returned', () => {
-
                             var list = new ll();
-
                             expect(list.head).to.be.a('null');
                             expect(list.tail).to.be.a('null');
-
                             var node = list.addNode(5);
-
                             expect(list.head).to.deep.equal(node);
                             expect(list.tail).to.deep.equal(node);
                         });
                         it('Should set new node to have null next reference', () => {
-
                             var list = new ll();
-
                             var node = list.addNode(5);
-
                             expect(node.next).to.be.a('null');
-
                         })
                     })
                     //List with 1 element
@@ -107,6 +115,39 @@ describe('/Shared/dataStructures', () => {
 
             //Delete a node from the list
             describe('deleteNode(node)', () => {
+                it('Should return true for a successful delete', () => {
+                    var list = new ll();
+                    list.addNode(8);
+                    var n1 = list.addNode(10);
+                    list.addNode(8);
+                    assert.isTrue(list.removeNode(n1), 'Removal should return true, successfaul');
+                    expect(list.containsVal(n1.data)).to.be.a('null');
+                    
+                    
+                })
+                it('Should return false for a failed delete', () => {
+                    var list = new ll();
+                    list.addNode(8);
+                    var n1 = list.addNode(10);
+                    list.addNode(8);
+                    
+                    var l2 = new ll();
+                    l2.addNode(9);
+                    l2.addNode(15);
+                    
+                    assert.isFalse(l2.removeNode(n1), 'Removal should return false, not successful');
+                })
+                it("Should decrement list count by 1", () => {
+                    var list = new ll();
+                    list.addNode(8);
+                    var n1 = list.addNode(10);
+                    var n2 = list.addNode(8);
+                    expect(list.length).to.equal(3);
+                    list.removeNode(n1)
+                    expect(list.length).to.equal(2);
+                    list.removeNode(n2)
+                    expect(list.length).to.equal(1);
+                });
 
                 describe('Delete the only node in the list', () => {
                     var list = new ll();
@@ -210,6 +251,9 @@ describe('/Shared/dataStructures', () => {
                     expect(node1).to.deep.equal(node2);
                     expect(node1).to.be.a('null');
                     expect(node2).to.be.a('null');
+                })
+                it('Should reflect the change in length to the list', () =>{
+                    expect(list.length).to.equal(afterList.length);
                 })
             });
 

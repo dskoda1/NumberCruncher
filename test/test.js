@@ -7,12 +7,10 @@ describe("/Shared", () => {
     describe("randomGen(n)", () => {
         it("Should return an array", () => {
             var results = randomGen(10);
-
             expect(results).to.be.instanceof(Array);
         });
         it("Should return array of length passed to it: 78", () => {
             var results = randomGen(78);
-
             expect(results).to.have.length(78)
         });
     })
@@ -20,9 +18,8 @@ describe("/Shared", () => {
     describe("/Controllers",  () =>{
         
         var controllers = require('../shared/controllers/index')();
-        
         //random.js module
-        describe("randoms.js", () =>{
+        describe("randoms.js", () => {
             
             var randoms = controllers.randoms;
             //Create random array controller
@@ -37,7 +34,23 @@ describe("/Shared", () => {
                 });
             });
             describe("createRandomLinkedList(n)", () =>{
-                it("Should return a list object: Not implemented", () =>{
+                it("Should return an object with keys time, nums", () =>{
+                    var ret = randoms.createRandomLinkedList(50);
+                    expect(ret).to.have.all.keys({time: 40, nums: {}})
+                });
+                it("Should return a list object with keys head, tail, length called nums", () =>{
+                    var ret = randoms.createRandomLinkedList(50);
+                    expect(ret.nums).to.have.any.keys({head: {}, tail: {}, length: 0})
+                })
+            })
+            describe('createRandomBST(n)', () => {
+                it("Should return an object with keys time, nums", () =>{
+                    var ret = randoms.createRandomBST(50);
+                    expect(ret).to.have.all.keys({time: 40, nums: {}})
+                });
+                it("Should return a tree object with key root", () =>{
+                    var ret = randoms.createRandomBST(50);
+                    expect(ret.nums).to.have.any.keys({root: {}})
                 })
             })
         });

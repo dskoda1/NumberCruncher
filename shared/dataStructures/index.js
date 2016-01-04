@@ -1,10 +1,12 @@
 module.exports = () => {
     
-    var llController = require('./linkedList.js');
+    var llConstructor = require('./linkedList');
+    var bstConstructor = require('./bst');
     
     return {
         
-        ll: llController
+        ll: llConstructor,
+        bst: bstConstructor
         
     }
     
