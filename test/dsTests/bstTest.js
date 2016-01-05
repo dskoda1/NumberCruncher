@@ -72,6 +72,23 @@ describe('/Shared/dataStructures', () => {
                 })
             })
 
+            describe('delete(val', () => {
+                it("Should return a node with data, left*, and right* keys if successful. *=nulled out", () => {
+                    var tree = new bst();
+                    tree.insert(6);
+                    tree.insert(14);
+                    tree.insert(4);
+                    tree.insert(8);
+                    tree.insert(12);
+                    var node = tree.delete(8);
+                    expect(node).to.have.any.keys('data');
+                    expect(node).to.have.any.keys('left');
+                    expect(node.left).to.be.a('null');
+                    expect(node).to.have.any.keys('right');
+                    expect(node.right).to.be.a('null');
+                });
+            })
+
             describe('search(val)', () => {
                 var tree = new bst();
                 var root = tree.insert(10);
@@ -82,10 +99,10 @@ describe('/Shared/dataStructures', () => {
                 var rootRightLeft = tree.insert(12);
                 var rootRightRight = tree.insert(16);
                 it('Should return the first node if found', () => {
-                        var foundNode = tree.search(8);
-                        expect(foundNode).to.deep.equal(rootLeftRight);
+                    var foundNode = tree.search(8);
+                    expect(foundNode).to.deep.equal(rootLeftRight);
                 })
-                
+
                 it("Should return null if value not found", () => {
                     var notFound = tree.search(19);
                     expect(notFound).to.be.a('null');

@@ -35,6 +35,22 @@ function bst () {
         return node;
     }
     
+    this.delete = (val) => {
+        
+        var node = this.search(val);
+        if(node){
+            //Rearrange tree here
+            
+            
+            node.left = null;
+            node.right = null;
+            return node;
+        }else{
+            return null;
+        }
+        
+    }
+    
     this.search = (val) => {
         //Search the tree
         var curr = this.root;
