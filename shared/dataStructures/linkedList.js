@@ -3,7 +3,7 @@ function ll() {
     this.head = null,
         this.tail = null,
         this.length = 0,
-        this.addNode = (val) => {
+        this.insert = (val) => {
             //Check for each case:
             //1. List is empty
             //2. List has 1 element
@@ -44,7 +44,7 @@ function ll() {
         return null;
     }
 
-    this.removeNode = (node) => {
+    this.deleteNode = (node) => {
         //1. Node is the only one in the list
         var success = false;
         if (this.head === node && this.tail === node) {
@@ -99,6 +99,18 @@ function ll() {
         }
 
     }
+    
+    this.delete = (val) => {
+        
+        //Find out if the node is in the list
+        var node = this.containsVal(val);
+        if(node){
+            return this.deleteNode(node);
+        }else{
+            return false;
+        }
+        
+    }
 
     this.filter = (f) => {
         //Go through each element in the list
@@ -108,7 +120,7 @@ function ll() {
 
             if (!f(node.data)) {
                 var temp = node.next;
-                this.removeNode(node);
+                this.deleteNode(node);
                 node = temp;
             }
             else {

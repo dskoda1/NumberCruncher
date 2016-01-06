@@ -15,16 +15,22 @@ function bst () {
                 var curr = temp;
                 //Value is less
                 if(curr.data > val){
+                    
                     if(curr.left === null){
+                        //node.parent = curr;
                         curr.left = node;
                         break;
+                        
                     }else{
                         temp = curr.left;
                     }
                 }else{//Value is right
+                
                     if(curr.right === null){
+                        //node.parent = curr;
                         curr.right = node;
                         break;
+                        
                     }else{
                         temp = curr.right;
                     }
@@ -40,15 +46,68 @@ function bst () {
         var node = this.search(val);
         if(node){
             //Rearrange tree here
+            //Has two children
+            if(node.left && node.right){
+                //TODO
+            //Check for left subtrees right most node
+                if(node.left.right){
+                    //Exists
+                }
+            
+                
+            }
+            //Has one child
+            else if(node.left || node.right){
+                //TODO
+                
+            }
+            //Has no children
+            else{
+                //Simply delete its reference from parent
+                var parent = this.findParent(node);
+                if(parent.left === node){
+                    parent.left = null;
+                }else if(parent.right === node){
+                    parent.right = null;
+                }
+            }
             
             
             node.left = null;
             node.right = null;
-            return node;
+            return true;
         }else{
-            return null;
+            return false;
         }
         
+    }
+    
+    this.findParent = (node) => {
+        var ret = null;
+        //Search the tree
+        if(node === this.root){
+            return ret;
+        }
+        var curr = this.root;
+        while(curr !== null && curr.left !== node && curr.right !== node){
+            if(curr.data > node.data){
+                curr = curr.left;
+            }else{
+                curr = curr.right;
+            }
+        }
+        //Sanity check
+        if(curr){
+            if(node === curr.left){
+                ret = curr;
+            }else if(node === curr.right){
+                ret = curr;
+            }else{
+                ret = null;
+            }
+        }
+            
+            return ret;        
     }
     
     this.search = (val) => {
@@ -79,17 +138,14 @@ function bst () {
         //TODO
     }
     
-    this.deleteNode = () => {
-        
-        //TODO
-    }
 }
 
 function Node (val) {
     return {
         data: val,
         left: null,
-        right: null
+        right: null,
+        //parent: null
     }
     
 }

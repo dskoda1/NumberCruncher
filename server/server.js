@@ -8,6 +8,10 @@ var bp = require('body-parser');
 //For parsing post requests
 router.use(bp.urlencoded({extended: false}));
 
+//Set up logging
+var morgan = require('morgan')
+router.use(morgan(':method :url in :response-time ms status :status'))
+
 
 //var util = require('../shared/index')();
 var routes = require('./routes/index')(router);
