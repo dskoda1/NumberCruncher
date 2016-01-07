@@ -174,6 +174,9 @@ describe('/Shared/dataStructures', () => {
                     var rootRightRight = tree.insert(16);
 
                     //Delete rootLeft
+                    tree.delete(6);
+                    expect(root.left).to.deep.equal(rootLeftLeft);
+                    expect(tree.findParent(rootLeftLeft)).to.deep.equal(root);
 
                 })
 
@@ -192,6 +195,24 @@ describe('/Shared/dataStructures', () => {
 
 
 
+
+            })
+
+            describe('findSuccessor(node)', () => {
+                var tree = new bst();
+                var root = tree.insert(10);
+                var rootLeft = tree.insert(6);
+                var rootRight = tree.insert(14);
+                //var rootLeftLeft = tree.insert(4);
+                var rootLeftRight = tree.insert(8);
+                var rootRightLeft = tree.insert(12);
+                var rootRightRight = tree.insert(16);
+                it('Should return null if passed null', () => {
+                    expect(tree.findSuccessor(null)).to.be.a('null');
+                })
+                it('Should return the successor of a node', () => {
+                    
+                })
 
             })
 

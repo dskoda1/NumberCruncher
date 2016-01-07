@@ -49,16 +49,29 @@ function bst () {
             //Has two children
             if(node.left && node.right){
                 //TODO
-            //Check for left subtrees right most node
+            //Check for right subtrees left most node
                 if(node.left.right){
                     //Exists
                 }
-            
-                
             }
             //Has one child
             else if(node.left || node.right){
                 //TODO
+                if(node.left && !node.right){
+                    var parent = this.findParent(node);
+                    if(parent.left === node){
+                        parent.left = node.left;
+                    }else if(parent.right === node){
+                        parent.right = node.left;
+                    }
+                }else if(node.right && !node.left){
+                    var parent = this.findParent(node);
+                    if(parent.left === node){
+                        parent.left = node.right;
+                    }else if(parent.right === node){
+                        parent.right = node.right;
+                    }
+                }
                 
             }
             //Has no children
@@ -78,6 +91,16 @@ function bst () {
             return true;
         }else{
             return false;
+        }
+        
+    }
+    
+    this.findSuccessor = (node) => {
+        
+        if(node){
+            
+        }else{
+            return null;
         }
         
     }
