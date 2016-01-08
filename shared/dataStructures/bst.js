@@ -49,7 +49,7 @@ function bst () {
             //Has two children
             if(node.left && node.right){
                 //TODO
-            //Check for right subtrees left most node
+            //Check for Successor
                 if(node.left.right){
                     //Exists
                 }
@@ -97,12 +97,36 @@ function bst () {
     
     this.findSuccessor = (node) => {
         
+        var ret = null;
         if(node){
+            if(node.right){
+                var curr = node.right;
+                while(curr.left !== null){
+                    curr = curr.left
+                }
+                ret = curr;
+            }else{
+                var parent = this.findParent(node);
+                if(node === parent.left){
+                    ret = parent;
+                }else{
+                    var nextUp = this.findParent(parent);
+                    while(nextUp !== null && nextUp.left !== parent){
+                        parent = nextUp;
+                        nextUp = this.findParent(parent);
+                    }
+                    if(nextUp && nextUp.left === parent){
+                        ret = nextUp
+                    }else{
+                        ret = null;
+                    }
+                }
+            }
             
         }else{
-            return null;
+            ret = null;
         }
-        
+        return ret;
     }
     
     this.findParent = (node) => {

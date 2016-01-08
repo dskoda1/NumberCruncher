@@ -94,7 +94,7 @@ describe('/Shared/dataStructures', () => {
 
                 });
 
-                it("Should return false if successful", () => {
+                it("Should return false if unsuccessful", () => {
                     var tree = new bst();
                     tree.insert(6);
                     tree.insert(14);
@@ -174,9 +174,12 @@ describe('/Shared/dataStructures', () => {
                     var rootRightRight = tree.insert(16);
 
                     //Delete rootLeft
-                    tree.delete(6);
-                    expect(root.left).to.deep.equal(rootLeftLeft);
-                    expect(tree.findParent(rootLeftLeft)).to.deep.equal(root);
+                    it('Should make nodes parent->left now point to nodes left child', () => {
+                        tree.delete(6);
+                        expect(root.left).to.deep.equal(rootLeftLeft);
+                        expect(tree.findParent(rootLeftLeft)).to.deep.equal(root);
+
+                    })
 
                 })
 
@@ -190,7 +193,13 @@ describe('/Shared/dataStructures', () => {
                     var rootRightLeft = tree.insert(12);
                     var rootRightRight = tree.insert(16);
 
-                    //Delete rootLeft
+                    //Delete delete rootLeft
+                    it('Should make nodes parent->right now point to nodes right child', () => {
+                        tree.delete(6);
+                        expect(root.left).to.deep.equal(rootLeftRight);
+                        expect(tree.findParent(rootLeftRight)).to.deep.equal(root);
+
+                    })
                 })
 
 
@@ -200,18 +209,35 @@ describe('/Shared/dataStructures', () => {
 
             describe('findSuccessor(node)', () => {
                 var tree = new bst();
-                var root = tree.insert(10);
-                var rootLeft = tree.insert(6);
-                var rootRight = tree.insert(14);
-                //var rootLeftLeft = tree.insert(4);
-                var rootLeftRight = tree.insert(8);
-                var rootRightLeft = tree.insert(12);
-                var rootRightRight = tree.insert(16);
+                var vals = [20, 10, 30, 5, 15, 25, 35, 7, 12, 17, 22, 27, 32]
+                var nodes = []
+                for (var i = 0; i < vals.length; i++) {
+                    nodes.push(tree.insert(vals[i]));
+                }
+
                 it('Should return null if passed null', () => {
                     expect(tree.findSuccessor(null)).to.be.a('null');
                 })
-                it('Should return the successor of a node', () => {
-                    
+                it('Should return minimum in right subtree if node has a right subtree', () => {
+                    expect(tree.findSuccessor(nodes[1])).to.deep.equal(nodes[8])
+                    expect(tree.findSuccessor(nodes[4])).to.deep.equal(nodes[9])
+                    expect(tree.findSuccessor(nodes[3])).to.deep.equal(nodes[7])
+                    expect(tree.findSuccessor(nodes[5])).to.deep.equal(nodes[11])
+                    expect(tree.findSuccessor(nodes[0])).to.deep.equal(nodes[10])
+                })
+                it('Should return parent if node is a left leaf', () => {
+                    expect(tree.findSuccessor(nodes[12])).to.deep.equal(nodes[6]);
+                    expect(tree.findSuccessor(nodes[8])).to.deep.equal(nodes[4]);
+                    expect(tree.findSuccessor(nodes[10])).to.deep.equal(nodes[5]);
+                    expect(tree.findSuccessor(nodes[12])).to.deep.equal(nodes[6]);
+                })
+                it('Should return smallest ancestor greater than itself if node is a right leaf', () => {
+                    expect(tree.findSuccessor(nodes[7])).to.deep.equal(nodes[1]);
+                    expect(tree.findSuccessor(nodes[11])).to.deep.equal(nodes[2]);
+                    expect(tree.findSuccessor(nodes[9])).to.deep.equal(nodes[0]);
+                })
+                it('Should return null for the max value in the tree', () => {
+                    expect(tree.findSuccessor(nodes[6])).to.be.a('null');
                 })
 
             })
