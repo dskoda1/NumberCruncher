@@ -1,9 +1,47 @@
-function bst() {
+function Node(val, obj, key) {
+    //Passed an object
+    var ret = null;
+    if (!obj) {
+        ret = {
+            data: val,
+            object: null,
+            left: null,
+            right: null,
+        }
+    }
+    else if (obj && key) {
+        ret = {
+            data: obj[key] || val,
+            object: obj,
+            left: null,
+            right: null,
+        }
+    }
+    return ret
+
+}
+
+function bst(key) {
+    //Check if passed a key for an object
+    if (key) {
+        if (typeof(key) === 'string') {
+            this.key = key;
+        }
+    }
     this.root = null;
     this.size = 0;
 
     this.insert = (val) => {
-        var node = new Node(val);
+        //Check if dealing with objects here
+        if (typeof(val) === 'object') {
+            var obj = val;
+            val = obj[this.key];
+            var node = new Node(val, obj, this.key);
+        }
+        else {
+            var node = new Node(val);
+        }
+
 
         //Nothing in tree yet
         if (this.root === null) {
@@ -44,29 +82,40 @@ function bst() {
         this.size += 1;
         return node;
     }
-    
-    
+
+
 
     this.delete = (val) => {
-        
-        if(typeof(val) === 'number'){
+
+        if (typeof(val) === 'number') {
             var node = this.search(val);
         }
-        else if(typeof(val) === 'object'){
-            var node = val;
-        }else{
+        else if (typeof(val) === 'object') {
+            if (val.hasOwnProperty(this.key)) {
+                //Passed an object for deletion
+                var node = this.search(val[this.key]);
+            }
+            else {
+                //Passed a node for deletion
+                var node = val;
+            }
+        }
+        else {
             return null;
         }
-        
+
         if (node) {
             //Rearrange tree here
             //Has two children
             if (node.left && node.right) {
-                
+
                 var succ = this.findSuccessor(node);
                 node.data = succ.data;
+                if(succ.object){
+                    node.object = succ.object;
+                }
                 this.delete(succ);
-                
+
             }
             //Has one child
             else if (node.left || node.right) {
@@ -186,6 +235,7 @@ function bst() {
         return ret;
     }
 
+    //Only needs to deal with primitives
     this.search = (val) => {
         //Search the tree
         var curr = this.root;
@@ -218,14 +268,6 @@ function bst() {
 
 }
 
-function Node(val) {
-    return {
-        data: val,
-        left: null,
-        right: null,
-        //parent: null
-    }
 
-}
 
 module.exports = bst;
