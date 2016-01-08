@@ -18,7 +18,7 @@ exports.createRandomLinkedList = (n) => {
     var list = new ds.ll();
 
     for (var i=1;i<=n;i++) {
-		list.addNode(Math.floor(Math.random()*10000));
+		list.insert(Math.floor(Math.random()*10000));
 	}
 	var time = util.timer.stop(startTime);
     return {

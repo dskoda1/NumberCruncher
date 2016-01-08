@@ -1,37 +1,41 @@
-function bst () {
+function bst() {
     this.root = null;
     this.size = 0;
-    
+
     this.insert = (val) => {
         var node = new Node(val);
-        
+
         //Nothing in tree yet
-        if(this.root === null){
+        if (this.root === null) {
             this.root = node;
-        }else{
+        }
+        else {
             //Search through tree to find spot to place in
             var temp = this.root;
-            while(temp !== null){
+            while (temp !== null) {
                 var curr = temp;
                 //Value is less
-                if(curr.data > val){
-                    
-                    if(curr.left === null){
+                if (curr.data > val) {
+
+                    if (curr.left === null) {
                         //node.parent = curr;
                         curr.left = node;
                         break;
-                        
-                    }else{
+
+                    }
+                    else {
                         temp = curr.left;
                     }
-                }else{//Value is right
-                
-                    if(curr.right === null){
+                }
+                else { //Value is right
+
+                    if (curr.right === null) {
                         //node.parent = curr;
                         curr.right = node;
                         break;
-                        
-                    }else{
+
+                    }
+                    else {
                         temp = curr.right;
                     }
                 }
@@ -41,160 +45,187 @@ function bst () {
         return node;
     }
     
+    
+
     this.delete = (val) => {
         
-        var node = this.search(val);
-        if(node){
+        if(typeof(val) === 'number'){
+            var node = this.search(val);
+        }
+        else if(typeof(val) === 'object'){
+            var node = val;
+        }else{
+            return null;
+        }
+        
+        if (node) {
             //Rearrange tree here
             //Has two children
-            if(node.left && node.right){
-                //TODO
-            //Check for Successor
-                if(node.left.right){
-                    //Exists
-                }
+            if (node.left && node.right) {
+                
+                var succ = this.findSuccessor(node);
+                node.data = succ.data;
+                this.delete(succ);
+                
             }
             //Has one child
-            else if(node.left || node.right){
-                //TODO
-                if(node.left && !node.right){
+            else if (node.left || node.right) {
+
+                if (node.left && !node.right) {
+
                     var parent = this.findParent(node);
-                    if(parent.left === node){
+                    if (parent.left === node) {
                         parent.left = node.left;
-                    }else if(parent.right === node){
+                    }
+                    else if (parent.right === node) {
                         parent.right = node.left;
                     }
-                }else if(node.right && !node.left){
+
+                }
+                else if (node.right && !node.left) {
+
                     var parent = this.findParent(node);
-                    if(parent.left === node){
+                    if (parent.left === node) {
                         parent.left = node.right;
-                    }else if(parent.right === node){
+                    }
+                    else if (parent.right === node) {
                         parent.right = node.right;
                     }
                 }
-                
+
             }
             //Has no children
-            else{
+            else {
                 //Simply delete its reference from parent
                 var parent = this.findParent(node);
-                if(parent.left === node){
+                if (parent.left === node) {
                     parent.left = null;
-                }else if(parent.right === node){
+                }
+                else if (parent.right === node) {
                     parent.right = null;
                 }
             }
-            
-            
+
+
             node.left = null;
             node.right = null;
             return true;
-        }else{
+        }
+        else {
             return false;
         }
-        
+
     }
-    
+
     this.findSuccessor = (node) => {
-        
+
         var ret = null;
-        if(node){
-            if(node.right){
+        if (node) {
+            if (node.right) {
                 var curr = node.right;
-                while(curr.left !== null){
+                while (curr.left !== null) {
                     curr = curr.left
                 }
                 ret = curr;
-            }else{
+            }
+            else {
                 var parent = this.findParent(node);
-                if(node === parent.left){
+                if (node === parent.left) {
                     ret = parent;
-                }else{
+                }
+                else {
                     var nextUp = this.findParent(parent);
-                    while(nextUp !== null && nextUp.left !== parent){
+                    while (nextUp !== null && nextUp.left !== parent) {
                         parent = nextUp;
                         nextUp = this.findParent(parent);
                     }
-                    if(nextUp && nextUp.left === parent){
-                        ret = nextUp
-                    }else{
+                    if (nextUp && nextUp.left === parent) {
+                        ret = nextUp;
+                    }
+                    else {
                         ret = null;
                     }
                 }
             }
-            
-        }else{
+
+        }
+        else {
             ret = null;
         }
         return ret;
     }
-    
+
     this.findParent = (node) => {
         var ret = null;
         //Search the tree
-        if(node === this.root){
+        if (node === this.root) {
             return ret;
         }
         var curr = this.root;
-        while(curr !== null && curr.left !== node && curr.right !== node){
-            if(curr.data > node.data){
+        while (curr !== null && curr.left !== node && curr.right !== node) {
+            if (curr.data > node.data) {
                 curr = curr.left;
-            }else{
+            }
+            else {
                 curr = curr.right;
             }
         }
         //Sanity check
-        if(curr){
-            if(node === curr.left){
+        if (curr) {
+            if (node === curr.left) {
                 ret = curr;
-            }else if(node === curr.right){
+            }
+            else if (node === curr.right) {
                 ret = curr;
-            }else{
+            }
+            else {
                 ret = null;
             }
         }
-            
-            return ret;        
+
+        return ret;
     }
-    
+
     this.search = (val) => {
         //Search the tree
         var curr = this.root;
-        while(curr !== null){
-            if(curr.data === val){
+        while (curr !== null) {
+            if (curr.data === val) {
                 return curr;
-            }else{
-                if(curr.data > val){
+            }
+            else {
+                if (curr.data > val) {
                     curr = curr.left;
-                }else{
+                }
+                else {
                     curr = curr.right;
                 }
             }
         }
         return curr;
     }
-    
+
     this.printInOrder = () => {
-        
-          //Need to create a stack data type to do this
-    
+
+        //Need to create a stack data type to do this
+
     }
-    
+
     this.deleteVal = () => {
-        
+
         //TODO
     }
-    
+
 }
 
-function Node (val) {
+function Node(val) {
     return {
         data: val,
         left: null,
         right: null,
         //parent: null
     }
-    
+
 }
 
 module.exports = bst;

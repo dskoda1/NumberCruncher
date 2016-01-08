@@ -54,7 +54,7 @@ describe('/Shared/dataStructures', () => {
                 var hash = new hashTable();
                 it('should return the value if inserted successfully', () => {
 
-                    expect(hash.insert(78)).to.equal(78);
+                    assert.isTrue(hash.insert(78));
                 })
                 it('should return undefined if not a number', () => {
                     expect(hash.insert('string')).to.be.a('undefined');

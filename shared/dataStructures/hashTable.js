@@ -42,8 +42,8 @@ function hashTable(size, hashFunction) {
     this.insert = (val) => {
         if(typeof(val) === 'number'){
             var bucketToPutIn = this.hashFunction(val);
-            this.buckets[bucketToPutIn].addNode(val);
-            return val
+            this.buckets[bucketToPutIn].insert(val);
+            return true
         }else{
             return undefined;
         }

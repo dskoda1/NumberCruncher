@@ -104,59 +104,30 @@ describe('/Shared/dataStructures', () => {
                     assert.isFalse(tree.delete(7), 'Failed delete should return false.');
 
                 });
-
-                describe('Delete node with both children', () => {
+                
+                it('Should return null if not passed a number or an object', () => {
                     var tree = new bst();
-                    var root = tree.insert(10);
-                    var rootLeft = tree.insert(6);
-                    var rootRight = tree.insert(14);
-                    var rootLeftLeft = tree.insert(4);
-                    var rootLeftRight = tree.insert(8);
-                    var rootRightLeft = tree.insert(12);
-                    var rootRightRight = tree.insert(16);
-                    var rootLeftLeftLeft = tree.insert(2);
-                    var rootLeftLeftRight = tree.insert(5);
-
-                    //Delete rootleft
-                    tree.delete(6);
-                    //expect(root.left).to.deep.equal(rootLeftLeft);
-                    //expect(rootLeftLeft.right).to.deep.equal(rootLeftRight);
-                })
-
-
-                describe('Delete root of tree', () => {
-                    var tree = new bst();
-                    var root = tree.insert(10);
-                    var rootLeft = tree.insert(6);
-                    var rootRight = tree.insert(14);
-                    var rootLeftLeft = tree.insert(4);
-                    var rootLeftRight = tree.insert(8);
-                    var rootRightLeft = tree.insert(12);
-                    var rootRightRight = tree.insert(16);
-
-                    //Delete root
-
+                    expect(tree.delete('string')).to.be.a('null')
+                    
                 })
 
                 describe('Delete node with no children', () => {
                     var tree = new bst();
-                    var root = tree.insert(10);
-                    var rootLeft = tree.insert(6);
-                    var rootRight = tree.insert(14);
-                    var rootLeftLeft = tree.insert(4);
-                    var rootLeftRight = tree.insert(8);
-                    var rootRightLeft = tree.insert(12);
-                    var rootRightRight = tree.insert(16);
+                    var vals = [20, 10, 30, 5, 15, 25, 35, 7, 12, 17, 22, 27, 32]
+                    var nodes = []
+                    for (var i = 0; i < vals.length; i++) {
+                        nodes.push(tree.insert(vals[i]));
+                    }
 
                     it('Should set parents pointer to null for right side only', () => {
-                        tree.delete(8);
-                        expect(rootLeft.right).to.be.a('null');
-                        expect(rootLeft.left).to.deep.equal(rootLeftLeft);
+                        tree.delete(17);
+                        expect(nodes[4].right).to.be.a('null');
+                        expect(nodes[4].left).to.deep.equal(nodes[8]);
                     })
                     it('Should set parents pointer to null for left side only', () => {
-                        tree.delete(16);
-                        expect(rootRight.right).to.be.a('null');
-                        expect(rootRight.left).to.deep.equal(rootRightLeft);
+                        tree.delete(27);
+                        expect(nodes[5].right).to.be.a('null');
+                        expect(nodes[5].left).to.deep.equal(nodes[10]);
 
                     })
 
@@ -164,43 +135,85 @@ describe('/Shared/dataStructures', () => {
                 })
 
                 describe('Delete node with only left child', () => {
-                    var tree = new bst();
-                    var root = tree.insert(10);
-                    var rootLeft = tree.insert(6);
-                    var rootRight = tree.insert(14);
-                    var rootLeftLeft = tree.insert(4);
-                    //var rootLeftRight = tree.insert(8);
-                    var rootRightLeft = tree.insert(12);
-                    var rootRightRight = tree.insert(16);
 
                     //Delete rootLeft
-                    it('Should make nodes parent->left now point to nodes left child', () => {
-                        tree.delete(6);
-                        expect(root.left).to.deep.equal(rootLeftLeft);
-                        expect(tree.findParent(rootLeftLeft)).to.deep.equal(root);
+                    it('Should make node->parent->right now point to node->left', () => {
+
+                        var tree = new bst();
+                        var vals = [20, 10, 30, 5, 15, 25, 35, 7, 12, 17, 22, 27, 32]
+                        var nodes = []
+                        for (var i = 0; i < vals.length; i++) {
+                            nodes.push(tree.insert(vals[i]));
+                        }
+                        tree.delete(35);
+                        expect(nodes[2].right).to.deep.equal(nodes[12]);
+                        expect(tree.findParent(nodes[12])).to.deep.equal(nodes[2]);
 
                     })
 
                 })
 
                 describe('Delete node with only right child', () => {
-                    var tree = new bst();
-                    var root = tree.insert(10);
-                    var rootLeft = tree.insert(6);
-                    var rootRight = tree.insert(14);
-                    //var rootLeftLeft = tree.insert(4);
-                    var rootLeftRight = tree.insert(8);
-                    var rootRightLeft = tree.insert(12);
-                    var rootRightRight = tree.insert(16);
 
                     //Delete delete rootLeft
-                    it('Should make nodes parent->right now point to nodes right child', () => {
-                        tree.delete(6);
-                        expect(root.left).to.deep.equal(rootLeftRight);
-                        expect(tree.findParent(rootLeftRight)).to.deep.equal(root);
+                    it('Should make node->parent->left now point to node->right', () => {
+                        var tree = new bst();
+                        var vals = [20, 10, 30, 5, 15, 25, 35, 7, 12, 17, 22, 27, 32]
+                        var nodes = []
+                        for (var i = 0; i < vals.length; i++) {
+                            nodes.push(tree.insert(vals[i]));
+                        }
+
+                        tree.delete(5);
+                        expect(nodes[1].left).to.deep.equal(nodes[7]);
+                        expect(tree.findParent(nodes[7])).to.deep.equal(nodes[1]);
 
                     })
                 })
+
+
+                describe('Delete node with both children', () => {
+
+
+                    it('Should set it\'s value to be successor', () => {
+                        var tree = new bst();
+                        var vals = [20, 10, 30, 5, 15, 25, 35, 7, 12, 17, 22, 27, 32]
+                        var nodes = []
+                        for (var i = 0; i < vals.length; i++) {
+                            nodes.push(tree.insert(vals[i]));
+                        }
+                        var succVal = tree.findSuccessor(nodes[1]).data;
+                        tree.delete(10);
+                        expect(nodes[1].data).to.equal(12);
+
+                    })
+
+                    it('Should then remove that successor node', () => {
+
+                        var tree = new bst();
+                        var vals = [20, 10, 30, 5, 15, 25, 35, 7, 12, 17, 22, 27, 32]
+                        var nodes = []
+                        for (var i = 0; i < vals.length; i++) {
+                            nodes.push(tree.insert(vals[i]));
+                        }
+                        
+                        var succ = tree.findSuccessor(nodes[1]);
+                        tree.delete(10);
+                        expect(nodes[4].left).to.be.a('null');
+                    })
+
+                })
+
+
+                describe('Delete root of tree', () => {
+
+
+                    //Delete root
+
+                })
+
+
+
 
 
 
