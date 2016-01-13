@@ -27,7 +27,7 @@ describe('/Shared/sorts', () => {
 
         })
 
-        it("Should sort an array of size 3k correctly", () => {
+        it("Should sort an array of size 3k correctly", (done) => {
             var arr = randoms.createRandomArray(3000).nums;
 
             var shouldBeCorrect = insertionSort(arr);
@@ -35,7 +35,7 @@ describe('/Shared/sorts', () => {
             for (var i = 1; i < shouldBeCorrect.length; i++) {
                 assert.isTrue(shouldBeCorrect[i - 1] <= shouldBeCorrect[i]);
             }
-
+            done()
         })
 
     })
@@ -58,14 +58,14 @@ describe('/Shared/sorts', () => {
 
         })
         
-         it("Should sort an array of size 500k correctly", () => {
+         it("Should sort an array of size 500k correctly", (done) => {
             var arr = randoms.createRandomArray(500000).nums;
 
             var shouldBeCorrect = quickSort(arr);
             for (var i = 1; i < shouldBeCorrect.length; i++) {
                 assert.isTrue(shouldBeCorrect[i - 1] <= shouldBeCorrect[i]);
             }
-
+            done();
         })
 
     })
