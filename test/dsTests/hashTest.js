@@ -171,10 +171,10 @@ describe('/Shared/dataStructures', () => {
           }
           expect(hash100.getLoadFactor()).to.equal(1);
           var giantHash = new hashTable();
-          for(var i = 0; i < 500000; i++){
+          for(var i = 0; i < 5000; i++){
             giantHash.insert(Math.floor(Math.random()*10000));
           }
-          expect(giantHash.getLoadFactor()).to.equal(10000)
+          expect(giantHash.getLoadFactor()).to.equal(100)
         })
       })
 

@@ -1,25 +1,27 @@
+//Our includes required for starting a server
+var path = require('path');
 var express = require('express');
 var router = express();
-var server = require('http').createServer(router);
-
-//Helper middleware
-var path = require('path');
+var morgan = require('morgan')
 var bp = require('body-parser');
+var routes = require('./routes/index')(router);
+
+
+//Set the port
+router.set('port', (process.env.PORT || 3000));
+
+//Point the server to serve files from the public directory
+router.use('/', express.static(path.join(__dirname, '../public')));
+
 //For parsing post requests
 router.use(bp.urlencoded({extended: false}));
 
 //Set up logging
-var morgan = require('morgan')
 router.use(morgan(':method :url in :response-time ms status :status'))
 
-
-//var util = require('../shared/index')();
-var routes = require('./routes/index')(router);
-
-
 //Start up the server
-server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function() {
-  var addr = server.address();
-  console.log("Number Cruncher server listening at", addr.address + ":" + addr.port);
-});
+router.listen(router.get('port'), function() {
+    console.log('Number Cruncher server started: http://localhost:' + router.get('port') + '/');
+    console.log("Or.. https://number-cruncher-dskoda1.c9users.io");
+})
 

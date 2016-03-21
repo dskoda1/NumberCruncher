@@ -99,17 +99,18 @@ function ll() {
         }
 
     }
-    
+
     this.delete = (val) => {
-        
+
         //Find out if the node is in the list
         var node = this.containsVal(val);
-        if(node){
+        if (node) {
             return this.deleteNode(node);
-        }else{
+        }
+        else {
             return false;
         }
-        
+
     }
 
     this.filter = (f) => {
