@@ -11,9 +11,8 @@ function ll() {
             var node = {
                 data: val,
                 next: null
-            }
+            };
             if (this.head === null && this.tail === null) {
-
                 this.head = this.tail = node;
 
             }
@@ -26,9 +25,9 @@ function ll() {
                 this.tail.next = node;
                 this.tail = node;
             }
-            this.length += 1
+            this.length += 1;
             return node;
-        }
+        };
     this.containsVal = (val) => {
         //Traverse the list searching for an occurence of the value
         var node = this.head;
@@ -37,12 +36,12 @@ function ll() {
                 return node;
             }
             else {
-                node = node.next
+                node = node.next;
             }
         }
 
         return null;
-    }
+    };
 
     this.deleteNode = (node) => {
         //1. Node is the only one in the list
@@ -56,7 +55,7 @@ function ll() {
         }
         else if (node === this.head) {
             this.head = node.next;
-            node.next = null
+            node.next = null;
             success = true;
             //3. Node is the tail
         }
@@ -98,7 +97,7 @@ function ll() {
             return success;
         }
 
-    }
+    };
 
     this.delete = (val) => {
 
@@ -111,7 +110,7 @@ function ll() {
             return false;
         }
 
-    }
+    };
 
     this.filter = (f) => {
         //Go through each element in the list
@@ -128,7 +127,7 @@ function ll() {
                 node = node.next;
             }
         }
-    }
+    };
 
     this.map = (f) => {
         var node = this.head;
@@ -137,6 +136,6 @@ function ll() {
             node.data = newVal;
             node = node.next;
         }
-    }
+    };
 }
 module.exports = ll;

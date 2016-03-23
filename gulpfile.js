@@ -34,7 +34,7 @@ gulp.task('runTests', () => {
   return gulp.src('test/*', {read: true})
         // gulp-mocha needs filepaths so you can't have any plugins before it
         .pipe(mocha({reporter: 'nyan'}));
-})
+});
 
 gulp.task('watchForTests', () => {
   gulp.watch([
@@ -42,24 +42,26 @@ gulp.task('watchForTests', () => {
     './test/**'
     ],
     ['runTests']);
-})
+});
 
-gulp.task('watchll6', () => {
+gulp.task('es6-watch', () => {
   gulp.watch([
-    'shared/dataStructures/ll6.js',
-    'test/dsTests/ll6Test.js']
-  , ['ll6Lint', 'll6Test'])
-})
+    './shared/es6DataStructures/**',
+    './test/es6-DS-tests/**']
+  , ['es6-lint', 'es6-test']);
+});
 
-gulp.task('ll6Lint', () => {
-  return gulp.src('shared/dataStructures/ll6.js')
+gulp.task('es6-lint', () => {
+  return gulp.src('./shared/es6DataStructures/**')
     .pipe(eslint(require('./.eslintrc.json')))
     .pipe(eslint.format())
     .pipe(eslint.failAfterError());
 });
 
-gulp.task('ll6Test', () => {
-    return gulp.src('test/dsTests/ll6Test.js', {read: true})
+gulp.task('es6-test', () => {
+    return gulp.src('./test/es6-DS-tests/SinglyLinkedList-spec.js', {read: true})
         // gulp-mocha needs filepaths so you can't have any plugins before it
         .pipe(mocha({reporter: 'nyan'}));
-})
+});
+
+gulp.task('default', ['es6-watch']);

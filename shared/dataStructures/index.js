@@ -11,5 +11,5 @@ module.exports = () => {
         bst: bstConstructor,
         hashTable: hashConstructor,
         ll6: ll6
-    }
-}
+    };
+};
