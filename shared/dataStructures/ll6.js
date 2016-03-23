@@ -34,9 +34,8 @@ class ll {
             //Set this linked list tail to be equal to new node
             this.tail = newNode;
         }
-
-                    
-        return 0;
+        this.length += 1;
+        return newNode;
         
     }
 
